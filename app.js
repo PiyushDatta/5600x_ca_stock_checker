@@ -7,9 +7,9 @@ let app = http.createServer(async (req, res) => {
   // Set a response type of plain text for the response
   res.writeHead(200, { "Content-Type": "text/plain" });
   var productDetails = "";
-  for (var i = 0; i < website.urls.length; ++i) {
+  for (var i = 0; i < website.amd5600xUrls.length; ++i) {
     productDetails +=
-      (await stockCheck.getAmazonProductDetails(website.urls[i])) + "\n\n";
+      (await stockCheck.getProductDetails(website.amd5600xUrls[i])) + "\n\n";
   }
   // amazonProductDetails = await stockCheck.getAmazonProductDetails(amazonLink);
   // Send back a response and end the connection
