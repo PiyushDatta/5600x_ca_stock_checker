@@ -17,9 +17,8 @@
   },
   "homepage": "https://github.com/PiyushDatta/5600x_ca_stock_checker#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "cheerio": "^1.0.0-rc.3",
-    "express": "^4.17.1",
-    "nodemon": "^2.0.6",
-    "puppeteer": "^5.5.0"
+    "nodemon": "^2.0.6"
   }
 }

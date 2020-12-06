@@ -1,5 +1,5 @@
-const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
+const axios = require("axios");
 
 async function getProductDetails(url, selectors) {
   var html = await getHTMLPage(url);
@@ -33,12 +33,7 @@ async function getProductDetails(url, selectors) {
 }
 
 async function getHTMLPage(url) {
-  // browser vars
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(url);
-  var html = await page.evaluate(() => document.body.innerHTML);
-  return html;
+  return (await axios.get(url)).data;
 }
 
 async function scrapeProductSite(html, defaultValue, selector) {
