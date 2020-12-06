@@ -1,22 +1,30 @@
+const Discord = require("discord.js");
 const website = require("./src/websites");
-const http = require("http");
 const stockCheck = require("./src/stockCheck");
+require("dotenv").config();
 
-// Create an instance of the http server to handle HTTP requests
-let app = http.createServer(async (req, res) => {
-  // Set a response type of plain text for the response
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  var productDetails = "";
+async function checkProductStocks() {
+  var productDetails = [];
   for (var i = 0; i < website.amd5600xUrls.length; ++i) {
-    productDetails +=
-      (await stockCheck.getProductDetails(website.amd5600xUrls[i])) + "\n\n";
+    productDetails.push(await stockCheck.getProductDetails(website.amd5600xUrls[i]));
   }
-  // amazonProductDetails = await stockCheck.getAmazonProductDetails(amazonLink);
-  // Send back a response and end the connection
-  res.end(productDetails);
-});
+  return productDetails[0]['site'];
+}
 
-// Start the server on port 3000
-app.listen(3000, "127.0.0.1");
-console.log("Node server running on port 3000");
-console.log("http://localhost:3000/");
+// discord client
+const client = new Discord.Client();
+
+client.on("ready", () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
+client.on("message", async (msg) => {
+  if (msg.content === "yo") {
+    msg.reply("you a dummy");
+  } else if (msg.content === "ping") {
+    const channel = client.channels.cache.find(
+      (channel) => channel.name === "datapi_bot"
+    );
+    channel.send(await checkProductStocks());
+  }
+});
+client.login(process.env.BOT_TOKEN);

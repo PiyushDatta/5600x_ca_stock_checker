@@ -4,6 +4,8 @@
   "description": "check stock of amd 5600x in canada",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +19,12 @@
   },
   "homepage": "https://github.com/PiyushDatta/5600x_ca_stock_checker#readme",
   "dependencies": {
+    "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
     "axios": "^0.21.0",
     "cheerio": "^1.0.0-rc.3",
     "nodemon": "^2.0.6"

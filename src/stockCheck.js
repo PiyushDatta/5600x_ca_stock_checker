@@ -1,6 +1,7 @@
 const utils = require("./utils");
 
 async function getProductDetails(url) {
+  var resDict = {};
   switch (true) {
     // AMAZON
     case url.includes("amazon"):
@@ -9,13 +10,11 @@ async function getProductDetails(url) {
         productPrice: "#price_inside_buybox",
         productAvailability: "#availability .a-size-medium",
       };
-      return (
-        "Site: Amazon\n" +
-        "Link: " +
-        url +
-        "\n" +
-        (await utils.getProductDetails(url, selectors))
-      );
+      resDict = await utils.getProductDetails(url, selectors);
+      resDict["site"] = "Amazon";
+      resDict["link"] = url;
+      resDict["status"] = "0";
+      return resDict;
     // NEWEGG
     case url.includes("newegg"):
       selectors = {
@@ -23,13 +22,11 @@ async function getProductDetails(url) {
         productPrice: ".product-price .price-current",
         productAvailability: ".product-inventory",
       };
-      return (
-        "Site: Newegg\n" +
-        "Link: " +
-        url +
-        "\n" +
-        (await utils.getProductDetails(url, selectors))
-      );
+      resDict = await utils.getProductDetails(url, selectors);
+      resDict["site"] = "Newegg";
+      resDict["link"] = url;
+      resDict["status"] = "0";
+      return resDict;
     // CANADA COMPUTERS
     case url.includes("canadacomputers"):
       selectors = {
@@ -37,15 +34,14 @@ async function getProductDetails(url) {
         productPrice: ".h2-big",
         productAvailability: ".pi-prod-availability span",
       };
-      return (
-        "Site: Canada Computers\n" +
-        "Link: " +
-        url +
-        "\n" +
-        (await utils.getProductDetails(url, selectors))
-      );
+      resDict = await utils.getProductDetails(url, selectors);
+      resDict["site"] = "Canada Computers";
+      resDict["link"] = url;
+      resDict["status"] = "0";
+      return resDict;
     default:
-      return "No scraper found for: " + url;
+      resDict["status"] = "1";
+      return resDict;
   }
 }
 module.exports = { getProductDetails };

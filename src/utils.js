@@ -29,7 +29,11 @@ async function getProductDetails(url, selectors) {
     selectors["productAvailability"]
   );
 
-  return `Product name: ${productName}\nPrice: ${productPrice}\nAvailability: ${productAvailability}`;
+  return {
+    name: productName,
+    price: productPrice,
+    availability: productAvailability,
+  };
 }
 
 async function getHTMLPage(url) {
