@@ -41,7 +41,7 @@ client.on("ready", async () => {
   const channel = client.channels.cache.find(
     (channel) => channel.name === "datapi_bot"
   );
-  // channel.send("datapi_bot has initiated and will now search the web.");
+  channel.send("datapi_bot has initiated and will now search the web.");
   var numTimesProductsChecked = 0;
   while (true) {
     // sleep for 2 seconds to avoid getting banned/rejected from websites
@@ -94,7 +94,7 @@ client.on("message", async (message) => {
       message.content.includes("set target price") ||
       message.content.includes("set price target")
     ) {
-      // only process number after $
+      // only process number after $, if it's valid
       newPrice = message.content
         .substring(message.content.lastIndexOf("$") + 1)
         .trim();
