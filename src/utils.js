@@ -46,4 +46,16 @@ async function scrapeProductSite(html, defaultValue, selector) {
   return defaultValue;
 }
 
-module.exports = { getProductDetails };
+// check if string is a valid number
+function isNumeric(str) {
+  // we only process strings!
+  if (typeof str != "string") return false;
+  return (
+    // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(str) &&
+    // ...and ensure strings of whitespace fail
+    !isNaN(parseFloat(str))
+  );
+}
+
+module.exports = { getProductDetails, isNumeric };
