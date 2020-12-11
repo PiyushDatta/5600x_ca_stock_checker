@@ -5,27 +5,36 @@ async function getProductDetails(url, selectors) {
   var html = await getHTMLPage(url);
 
   // product name
-  var defaultValue = "Could not find product name.";
-  const productName = await scrapeProductSite(
+  var productName = "Could not find product name.";
+  // product price
+  var productPrice = "0.00";
+  // product availability
+  var productAvailability = "Could not find product availability.";
+
+  if (html === "") {
+    return {
+      name: productName,
+      price: productPrice,
+      availability: productAvailability,
+    };
+  }
+
+  productName = await scrapeProductSite(
     html,
-    defaultValue,
+    productName,
     selectors["productName"]
   );
 
-  // product price
-  defaultValue = "0.00";
-  var productPrice = await scrapeProductSite(
+  productPrice = await scrapeProductSite(
     html,
-    defaultValue,
+    productPrice,
     selectors["productPrice"]
   );
   productPrice = Number(productPrice.replace(/[^0-9.-]+/g, ""));
 
-  // product availability
-  defaultValue = "Could not find product availability.";
-  const productAvailability = await scrapeProductSite(
+  productAvailability = await scrapeProductSite(
     html,
-    defaultValue,
+    productAvailability,
     selectors["productAvailability"]
   );
 
@@ -37,7 +46,38 @@ async function getProductDetails(url, selectors) {
 }
 
 async function getHTMLPage(url) {
-  return (await axios.get(url)).data;
+  var resp = "";
+  try {
+    resp = (await axios.get(url)).data;
+  } catch (error) {
+    console.log("Got an error in getHTMLPage");
+    console.log("For url: " + url);
+    if (error.response) {
+      /*
+       * The request was made and the server responded with a
+       * status code that falls out of the range of 2xx
+       */
+      console.log("Got error response");
+      console.log(error.response.status);
+      console.log();
+      console.log(error.response.data);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      /*
+       * The request was made but no response was received, `error.request`
+       * is an instance of XMLHttpRequest in the browser and an instance
+       * of http.ClientRequest in Node.js
+       */
+      console.log("No error response, got error request");
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request and triggered an Error
+      console.log("Something else happened");
+      console.log("Error", error.message);
+    }
+    console.log();
+  }
+  return resp;
 }
 
 async function scrapeProductSite(html, defaultValue, selector) {

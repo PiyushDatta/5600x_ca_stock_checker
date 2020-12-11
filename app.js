@@ -17,7 +17,17 @@ async function checkProductStocks() {
     );
   }
 
-  const productAvailableStrings = ["in stock."];
+  const productAvailableStrings = [
+    "OUT OF STOCK",
+    "OUT OF STOCK.",
+    "Currently unavailable",
+    "Currently unavailable.",
+    "Not Available Online",
+    "Not Available Online.",
+    "Could not find product availability",
+    "Could not find product availability.",
+  ].map((availabilityName) => availabilityName.toLowerCase());
+
   var res = "";
   var product;
   for (product of productDetails) {
@@ -27,7 +37,7 @@ async function checkProductStocks() {
       // only if price is under the currentAcceptablePrice
       Number(product["price"]) <= currentAcceptablePrice &&
       // only if product is available for purchase
-      productAvailableStrings.includes(product["availability"].toLowerCase())
+      !productAvailableStrings.includes(product["availability"].toLowerCase())
     ) {
       res += `Site: ${product["site"]}\nLink: ${product["link"]}\nProduct name: ${product["name"]}\nPrice: ${product["price"]}\nAvailability: ${product["availability"]}\n\n`;
     }
@@ -41,6 +51,7 @@ client.on("ready", async () => {
   const channel = client.channels.cache.find(
     (channel) => channel.name === "datapi_bot"
   );
+  // message when starting
   channel.send("datapi_bot has initiated and will now search the web.");
   var numTimesProductsChecked = 0;
   while (true) {
@@ -53,6 +64,7 @@ client.on("ready", async () => {
     var notifMsg = await checkProductStocks();
     numTimesProductsChecked++;
 
+    // message when product found in price range with availability
     if (notifMsg !== "") {
       channel.send(notifMsg);
       channel.send("=================================");
@@ -89,7 +101,7 @@ client.on("message", async (message) => {
       );
     }
 
-    // when user wants to set the current price target
+    // set the current price target
     if (
       message.content.includes("set target price") ||
       message.content.includes("set price target")

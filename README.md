@@ -7,3 +7,8 @@ to run:
 
 discord:
 `npm run dev`
+
+make sure to create .env file with:
+BOT_TOKEN=<YOUR DISCORD TOKEN>
+
+to get this go to discord dev, then you go to bot and get the token
