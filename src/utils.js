@@ -46,9 +46,12 @@ async function getProductDetails(url, selectors) {
 }
 
 async function getHTMLPage(url) {
+  const config = {
+    headers: { "Access-Control-Allow-Origin": "*" },
+  };
   var resp = "";
   try {
-    resp = (await axios.get(url)).data;
+    resp = (await axios.get(url, config)).data;
   } catch (error) {
     console.log("Got an error in getHTMLPage");
     console.log("For url: " + url);
