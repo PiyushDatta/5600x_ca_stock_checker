@@ -2,10 +2,10 @@
 
 check stock of amd 5600x in canada
 
-to run:
-`nodemon app.js`
+prod with discord:
+`npm run start`
 
-discord:
+testing with discord:
 `npm run dev`
 
 make sure to create .env file with:

@@ -47,6 +47,7 @@ async function checkProductStocks() {
 
 // constantly track websites and check for availability
 client.on("ready", async () => {
+  console.log("Date: " + utils.getCurrentDateTime());
   console.log(`Logged in as ${client.user.tag}!`);
   const channel = client.channels.cache.find(
     (channel) => channel.name === "datapi_bot"
@@ -66,6 +67,7 @@ client.on("ready", async () => {
 
     // message when product found in price range with availability
     if (notifMsg !== "") {
+      console.log("Date: " + utils.getCurrentDateTime());
       channel.send(notifMsg);
       channel.send("=================================");
       // sleep for 2 seconds to avoid discord api abuse
