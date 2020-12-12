@@ -9,7 +9,7 @@ async function getProductDetails(url, selectors) {
   // product price
   var productPrice = "0.00";
   // product availability
-  var productAvailability = "Could not find product availability.";
+  var productAvailability = '';
 
   if (html === "") {
     return {

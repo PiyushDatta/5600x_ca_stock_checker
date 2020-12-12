@@ -26,6 +26,7 @@ async function checkProductStocks() {
     "Not Available Online.",
     "Could not find product availability",
     "Could not find product availability.",
+    "",
   ].map((availabilityName) => availabilityName.toLowerCase());
 
   var res = "";
@@ -67,6 +68,7 @@ client.on("ready", async () => {
 
     // message when product found in price range with availability
     if (notifMsg !== "") {
+      console.log("Sending notif msg, found something.");
       console.log("Date: " + utils.getCurrentDateTime());
       channel.send(notifMsg);
       channel.send("=================================");
