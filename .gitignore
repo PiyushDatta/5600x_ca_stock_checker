@@ -1,2 +1,4 @@
 node_modules/
 .env
+output.log
+piydatta_aws_keypair.pem
